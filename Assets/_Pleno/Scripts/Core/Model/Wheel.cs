@@ -81,6 +81,20 @@ namespace Pleno.Core.Model
             return removed;
         }
 
+        /// <summary>Reconstrói uma roda salva, preservando os Ids (apostas de Vizinhos dependem deles).</summary>
+        public static Wheel Restore(IEnumerable<Pocket> pocketsWithIds, int nextId)
+        {
+            var wheel = new Wheel();
+            foreach (Pocket pocket in pocketsWithIds)
+            {
+                if (pocket.Id >= nextId)
+                    throw new ArgumentException($"Casa com Id {pocket.Id} >= NextId {nextId}.", nameof(nextId));
+                wheel._pockets.Add(pocket);
+            }
+            wheel.NextId = nextId;
+            return wheel;
+        }
+
         /// <summary>Cópia profunda, com os mesmos Ids. Serve para simular sem mexer na roda real.</summary>
         public Wheel Clone()
         {

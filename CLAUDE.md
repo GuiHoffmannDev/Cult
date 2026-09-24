@@ -72,6 +72,22 @@ Decisões já tomadas:
   Ao quebrar, a casa perde o Vidro e mantém a edição.
 - Colecionador conta números desde que entrou; o número do giro atual vale a partir do próximo.
 - Sortuda: dois sorteios independentes (Mult e $), feitos sempre na mesma ordem.
+- Juros incidem sobre o $ que o jogador tinha ao bater a meta, antes da recompensa e dos giros.
+- Preço de amuleto = piso da faixa da raridade (C $4, I $6, R $8), em `Balance.Shop.RelicPrices`.
+  Preços moram no Balance (o simulador precisa deles sem Unity), não nos ScriptableObjects.
+- Loja: a raridade é sorteada só entre raridades com amuleto disponível (proporção mantida).
+  Nunca oferece amuleto possuído nem o mesmo duas vezes (vale para o Pacote de Amuletos).
+- Espaço de consumível: 50% Tábua, 50% Carta, depois item uniforme; os dois espaços são independentes.
+- Pacote à venda: uniforme entre os 3. Opções dentro de um pacote nunca repetem.
+- Reroll troca amuletos e consumíveis; o pacote fica.
+- Pacote: Tábua e Carta escolhidas são usadas na hora; amuleto vai para o espaço livre; dá para pular.
+- Contador e Daltônico: aposta anulada conta como perdida (não ativa amuletos; se era a única, giro = 0).
+- Duplo Zero: 00 temporário oposto ao primeiro 0; sai no fim da mesa. Não é alvo nem origem de carta.
+- Edição de amuleto (Fortuna): mesmos valores da edição de casa, logo depois do amuleto, em todo
+  giro vencedor. A Fortuna só sorteia entre amuletos sem edição.
+- Artesão faz cópia completa (aprimoramento e edição). Roda tem no máximo 48 casas (Artesão).
+- Aprimorar uma Casa Rachada a conserta. O Pintor não aceita casa verde.
+- Girar exige pelo menos 1 ficha no pano.
 
 ## Rodar os testes
 

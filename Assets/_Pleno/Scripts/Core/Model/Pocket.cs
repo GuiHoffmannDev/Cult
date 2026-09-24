@@ -13,7 +13,7 @@ namespace Pleno.Core.Model
         public const int DoubleZero = -1;
 
         /// <summary>Identidade estável dentro da roda. Sobrevive a clonagens e remoções de outras casas.</summary>
-        public int Id { get; internal set; }
+        public int Id { get; set; }
 
         public int Number { get; set; }
         public PocketColor Color { get; set; }

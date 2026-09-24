@@ -50,31 +50,7 @@ namespace Pleno.Core.Rules
         }
 
         /// <summary>Índice sorteado com probabilidade proporcional ao peso.</summary>
-        public static int PickWeighted(IReadOnlyList<double> weights, IRandom rng)
-        {
-            double total = 0;
-            int lastPositive = -1;
-            for (int i = 0; i < weights.Count; i++)
-            {
-                if (weights[i] < 0 || double.IsNaN(weights[i]))
-                    throw new ArgumentException($"Peso inválido na casa {i}: {weights[i]}.", nameof(weights));
-                if (weights[i] > 0)
-                    lastPositive = i;
-                total += weights[i];
-            }
-            if (lastPositive < 0)
-                throw new ArgumentException("Nenhuma casa tem peso positivo.", nameof(weights));
-
-            double target = rng.NextDouble() * total;
-            double cumulative = 0;
-            for (int i = 0; i < weights.Count; i++)
-            {
-                cumulative += weights[i];
-                if (target < cumulative)
-                    return i;
-            }
-            return lastPositive; // arredondamento de ponto flutuante no fim do intervalo
-        }
+        public static int PickWeighted(IReadOnlyList<double> weights, IRandom rng) => rng.PickWeightedIndex(weights);
 
         /// <summary>
         /// Sorteia a casa. Se ela é Rachada, a bola salta uma vez para uma vizinha aleatória e fica lá,
