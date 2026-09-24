@@ -9,6 +9,10 @@ namespace Pleno.Core.Model
     public sealed class RelicInstance
     {
         public string Id { get; set; }
+
+        /// <summary>Edição dada pela Fortuna. Mesmo efeito da edição de casa, logo depois do amuleto.</summary>
+        public PocketEdition Edition { get; set; }
+
         public Dictionary<string, double> Counters { get; set; } = new Dictionary<string, double>();
 
         public RelicInstance()

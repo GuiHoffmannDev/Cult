@@ -24,6 +24,12 @@ namespace Pleno.Core.Rules
 
         /// <summary>Stream <c>luck</c>: Sortuda e quebra de Vidro.</summary>
         public IRandom Luck;
+
+        /// <summary>
+        /// Regra do chefe: apostas para as quais devolve falso contam como perdidas (não pontuam, não
+        /// ativam amuletos, não evitam o giro de 0). Nulo = todas valem.
+        /// </summary>
+        public Func<PlacedBet, bool> BetFilter;
     }
 
     /// <summary>
@@ -49,7 +55,8 @@ namespace Pleno.Core.Rules
             var winnerOrder = new List<int>();
             for (int i = 0; i < input.Bets.Count; i++)
             {
-                if (BetResolver.Wins(input.Bets[i], wheel, landing))
+                bool counts = input.BetFilter == null || input.BetFilter(input.Bets[i]);
+                if (counts && BetResolver.Wins(input.Bets[i], wheel, landing))
                 {
                     winners.Add(input.Bets[i]);
                     winnerOrder.Add(i);
@@ -85,13 +92,14 @@ namespace Pleno.Core.Rules
                     pontosAdd: SpinContext.NumberValue(pocket, input.Balance));
                 ScoreEnhancement(pocket, landing, values, luckyMult, acc);
                 ScoreSteelNeighbors(wheel, landing, values, acc);
-                ScoreEdition(pocket, landing, values, acc);
+                ScoreEdition(pocket.Edition, pocketSource, landing, values, acc);
 
-                // 3. Amuletos.
+                // 3. Amuletos; a edição de cada um age logo depois dele.
                 for (int slot = 0; slot < input.Relics.Count; slot++)
                 {
                     RelicInstance relic = input.Relics[slot];
                     RelicEffectRegistry.Get(relic.Id).OnScore(new RelicScope(relic, slot, ctx, acc, scoring: true));
+                    ScoreEdition(relic.Edition, "relic:" + relic.Id, slot, values, acc);
                 }
             }
 
@@ -172,10 +180,10 @@ namespace Pleno.Core.Rules
             }
         }
 
-        static void ScoreEdition(Pocket pocket, int index, PocketBalance values, ScoreAccumulator acc)
+        /// <summary>Edição de casa ou de amuleto: mesmos valores (GDD 5.3).</summary>
+        static void ScoreEdition(PocketEdition edition, string source, int index, PocketBalance values, ScoreAccumulator acc)
         {
-            string source = PocketSource(index);
-            switch (pocket.Edition)
+            switch (edition)
             {
                 case PocketEdition.Polished:
                     acc.Apply(ScoreStepKind.Edition, source, index, pontosAdd: values.PolishedPoints);
