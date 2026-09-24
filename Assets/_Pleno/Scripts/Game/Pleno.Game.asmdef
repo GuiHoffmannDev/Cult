@@ -1,0 +1,19 @@
+{
+    "name": "Pleno.Game",
+    "rootNamespace": "Pleno.Game",
+    "references": [
+        "Pleno.Core",
+        "Pleno.Data"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Newtonsoft.Json.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
