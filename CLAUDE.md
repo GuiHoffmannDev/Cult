@@ -61,6 +61,17 @@ corrija o código, nunca o teste.
 Decisões já tomadas:
 - Metas do Ante 3: 800 / 1200 / 1600 (o resumo vence a calibração antiga do GDD 4.1).
 - O Mult do giro começa em 0: o exemplo 1.683 exige 1 + 1 + 5 + 10 = 17.
+- O 00 soma 36 nos Pontos, igual ao 0.
+- Vizinhos cobre 5 posições físicas em volta da casa clicada na pista (âncora = Id da casa).
+  Um número repetido em outro ponto da roda não conta; se a âncora for apagada, a aposta não vence.
+- Giro sem vitória marca 0 e não chama os amuletos no passo 3, mas o pós-giro acontece:
+  Dourada paga, Sortuda sorteia o $ e o Vidro pode quebrar.
+- Aço acumula: a casa sorteada e cada vizinha imediata de Aço dão ×1,5 cada.
+- Casa Rachada: a bola sorteada nela salta uma vez para uma vizinha aleatória (stream `wheel`)
+  e fica lá, mesmo que a vizinha também seja Rachada. Só age no sorteio, não no empurrão.
+  Ao quebrar, a casa perde o Vidro e mantém a edição.
+- Colecionador conta números desde que entrou; o número do giro atual vale a partir do próximo.
+- Sortuda: dois sorteios independentes (Mult e $), feitos sempre na mesma ordem.
 
 ## Rodar os testes
 
