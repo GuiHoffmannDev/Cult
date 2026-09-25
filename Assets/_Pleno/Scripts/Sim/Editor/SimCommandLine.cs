@@ -9,7 +9,8 @@ namespace Pleno.Sim.Editor
     /// Modo headless (só com o Editor fechado):
     /// <code>
     /// Unity -batchmode -nographics -projectPath "$PWD" -executeMethod Pleno.Sim.Editor.SimCommandLine.Run \
-    ///   [-simRuns 800] [-simSeed PLENSEED] [-simBots guloso,sniper] [-simThreads 8] [-simOut caminho] -logFile -
+    ///   [-simRuns 800] [-simSeed PLENSEED] [-simBots guloso,sniper] [-simThreads 8] [-simBalance metas-1-4-9]
+    ///   [-simOut caminho] -logFile -
     /// </code>
     /// Sai com código 1 se alguma run quebrou (ação ilegal de bot ou exceção do Core).
     /// </summary>
@@ -30,6 +31,8 @@ namespace Pleno.Sim.Editor
                     config.Threads = int.Parse(threads);
                 if (TryGet(args, "-simBots", out string bots))
                     config.Bots = bots.Split(',').Select(ParseBot).ToList();
+                if (TryGet(args, "-simBalance", out string preset))
+                    BalancePresets.Use(config, BalancePresets.Get(preset.Trim()));
                 string output = TryGet(args, "-simOut", out string dir) ? dir : SimJob.DefaultOutput(config);
 
                 var results = SimBatch.Run(config);
