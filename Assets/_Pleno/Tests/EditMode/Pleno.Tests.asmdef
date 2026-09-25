@@ -6,7 +6,8 @@
         "UnityEditor.TestRunner",
         "Pleno.Core",
         "Pleno.Data",
-        "Pleno.Game"
+        "Pleno.Game",
+        "Pleno.Sim"
     ],
     "includePlatforms": [
         "Editor"

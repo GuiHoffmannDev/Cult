@@ -19,7 +19,7 @@ Leia antes de mexer em regras ou visual:
 | `Pleno.Game` | `Assets/_Pleno/Scripts/Game` | Core, Data, Newtonsoft | Máquina de estados da run, save, seed |
 | `Pleno.Presentation` | `Assets/_Pleno/Scripts/Presentation` | Core, Data, Game, pacotes visuais | Tudo que é visual e sonoro |
 | `Pleno.Sim` | `Assets/_Pleno/Scripts/Sim` | Core, Data, Game | Simulador (só Editor, headless via `-executeMethod`) |
-| `Pleno.Tests` | `Assets/_Pleno/Tests/EditMode` | Core, Data, Game | Testes NUnit EditMode |
+| `Pleno.Tests` | `Assets/_Pleno/Tests/EditMode` | Core, Data, Game, Sim | Testes NUnit EditMode |
 
 Regras:
 1. **Pleno.Core não conhece a Unity.** Nada de `UnityEngine`, nem `Vector2`, nem `Mathf`, nem
@@ -104,3 +104,25 @@ Em batchmode (só com o Editor **fechado**, porque o Unity trava o projeto abert
 
 Não use `-quit` junto com `-runTests`. O código de saída é diferente de 0 se algum teste falhar;
 os detalhes ficam em `TestResults/editmode.xml`.
+
+## Rodar o simulador (Fase 3)
+
+Os bots jogam só pelo `RunEngine` (via `RunDriver`, que chama os `Check…()` e lança
+`IllegalBotActionException` se um bot tentar algo ilegal). Previsões rodam sobre cópias do estado,
+com a sorte simulada num stream próprio do bot (nunca um dos sete). Parâmetros de estratégia dos
+bots ficam em `BotTuning`, não no `Balance`.
+
+- Editor: menu **Pleno > Simulador > Janela** (bots, runs, seed mestra) ou **Pleno > Simulador >
+  Rodar lote padrão** (800 runs × 4 bots, seed mestra `PLENSEED`). Roda em segundo plano; os CSVs vão
+  para `SimOutput/<seed>-<runs>/`. No macOS, deixe a janela da Unity em primeiro plano: em segundo
+  plano o App Nap estrangula o lote.
+- Headless (Editor fechado):
+
+```sh
+"/Applications/Unity/Hub/Editor/6000.6.2f1/Unity.app/Contents/MacOS/Unity" \
+  -batchmode -nographics -projectPath "$PWD" \
+  -executeMethod Pleno.Sim.Editor.SimCommandLine.Run -simRuns 800 -logFile -
+```
+
+Opções: `-simSeed`, `-simBots guloso,sniper`, `-simThreads`, `-simOut`. Sai com código 1 se alguma
+run quebrou. Mesma seed mestra = mesmos números, em qualquer máquina.
