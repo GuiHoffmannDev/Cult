@@ -59,7 +59,10 @@ corrija o código, nunca o teste.
 - Se o teste de regressão do exemplo 1.683 (GDD 3.4) divergir, pare e pergunte antes de mexer na regra.
 
 Decisões já tomadas:
-- Metas do Ante 3: 800 / 1200 / 1600 (o resumo vence a calibração antiga do GDD 4.1).
+- Metas (calibragem da Fase 3, substitui o resumo e o GDD 4.1): Ante 1 100 / 150 / 200,
+  Ante 2 1200 / 1800 / 2400, Ante 3 7200 / 10800 / 14400.
+- Tabela 3.3 calibrada na Fase 3: Vizinhos 40 Pontos (+40 por nível); Pleno +60 Pontos por nível.
+  O Pleno nível 1 continua 50 Pontos / 5 Mult, então o exemplo 1.683 não muda.
 - O Mult do giro começa em 0: o exemplo 1.683 exige 1 + 1 + 5 + 10 = 17.
 - O 00 soma 36 nos Pontos, igual ao 0.
 - Vizinhos cobre 5 posições físicas em volta da casa clicada na pista (âncora = Id da casa).

@@ -41,23 +41,15 @@ namespace Pleno.Sim
         {
             new BalancePreset(DefaultId, "Balance do jogo, sem mudança.", _ => { }),
             new BalancePreset("sem-empurrao", "0 empurrões por mesa.", b => b.Mesa.Nudges = 0),
-            new BalancePreset("metas-1-4-8", "Metas do Ante 2 ×4 e do Ante 3 ×8.", b => ScaleTargets(b, 1, 4, 8)),
-            new BalancePreset("metas-1-4-9", "Metas do Ante 2 ×4 e do Ante 3 ×9.", b => ScaleTargets(b, 1, 4, 9)),
-            new BalancePreset("metas-1-4-10", "Metas do Ante 2 ×4 e do Ante 3 ×10.", b => ScaleTargets(b, 1, 4, 10)),
-            new BalancePreset("metas-1-4-8-um-empurrao", "Metas ×(1, 4, 8) e 1 empurrão por mesa.", b =>
+            new BalancePreset("um-empurrao", "1 empurrão por mesa.", b => b.Mesa.Nudges = 1),
+            new BalancePreset("sem-giro-extra", "Sem $ por giro não usado.", b => b.Run.UnusedSpinMoney = 0),
+            new BalancePreset("metas-x0.9", "Metas dos Antes 2 e 3 ×0,9.", b => ScaleTargets(b, 1, 0.9, 0.9)),
+            new BalancePreset("metas-x1.1", "Metas dos Antes 2 e 3 ×1,1.", b => ScaleTargets(b, 1, 1.1, 1.1)),
+            new BalancePreset("apostas-do-resumo", "Vizinhos e Pleno com os valores do resumo (20 +20/nível; Pleno +30/nível).", b =>
             {
-                ScaleTargets(b, 1, 4, 8);
-                b.Mesa.Nudges = 1;
-            }),
-            new BalancePreset("metas-1-4-8-sem-giro-extra", "Metas ×(1, 4, 8) e sem $ por giro não usado.", b =>
-            {
-                ScaleTargets(b, 1, 4, 8);
-                b.Run.UnusedSpinMoney = 0;
-            }),
-            new BalancePreset("metas-1-4-9-pleno-x2", "Metas ×(1, 4, 9) e Pontos de Pleno e Vizinhos ×2 (base e por nível).", b =>
-            {
-                ScaleTargets(b, 1, 4, 9);
-                ScalePoints(b, 2, BetType.Straight, BetType.Neighbors);
+                b.Bets[BetType.Neighbors].Points = 20;
+                b.Bets[BetType.Neighbors].PointsPerLevel = 20;
+                b.Bets[BetType.Straight].PointsPerLevel = 30;
             }),
         };
 

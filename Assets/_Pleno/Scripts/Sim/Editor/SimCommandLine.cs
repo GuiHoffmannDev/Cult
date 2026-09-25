@@ -9,7 +9,7 @@ namespace Pleno.Sim.Editor
     /// Modo headless (só com o Editor fechado):
     /// <code>
     /// Unity -batchmode -nographics -projectPath "$PWD" -executeMethod Pleno.Sim.Editor.SimCommandLine.Run \
-    ///   [-simRuns 800] [-simSeed PLENSEED] [-simBots guloso,sniper] [-simThreads 8] [-simBalance metas-1-4-9]
+    ///   [-simRuns 800] [-simSeed PLENSEED] [-simBots guloso,sniper] [-simThreads 8] [-simBalance metas-x1.1]
     ///   [-simOut caminho] -logFile -
     /// </code>
     /// Sai com código 1 se alguma run quebrou (ação ilegal de bot ou exceção do Core).

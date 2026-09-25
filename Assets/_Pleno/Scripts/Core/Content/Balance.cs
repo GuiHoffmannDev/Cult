@@ -21,17 +21,20 @@ namespace Pleno.Core.Content
         public BossBalance Bosses { get; } = new BossBalance();
         public StartingWheelBalance StartingWheels { get; } = new StartingWheelBalance();
 
-        /// <summary>Tabela 3.3 (nível 1 + ganho por nível).</summary>
+        /// <summary>
+        /// Tabela 3.3 (nível 1 + ganho por nível), com a calibragem da Fase 3: Vizinhos ×2 em Pontos e o
+        /// ganho por nível do Pleno ×2. O Pleno nível 1 continua 50 (exemplo 1.683 do GDD 3.4).
+        /// </summary>
         public Dictionary<BetType, BetStats> Bets { get; } = new Dictionary<BetType, BetStats>
         {
             [BetType.SimpleChance] = new BetStats(points: 5, mult: 1, pointsPerLevel: 10, multPerLevel: 1),
             [BetType.DozenColumn] = new BetStats(points: 10, mult: 1, pointsPerLevel: 15, multPerLevel: 1),
             [BetType.Line] = new BetStats(points: 15, mult: 2, pointsPerLevel: 15, multPerLevel: 1),
-            [BetType.Neighbors] = new BetStats(points: 20, mult: 2, pointsPerLevel: 20, multPerLevel: 2),
+            [BetType.Neighbors] = new BetStats(points: 40, mult: 2, pointsPerLevel: 40, multPerLevel: 2),
             [BetType.Corner] = new BetStats(points: 20, mult: 2, pointsPerLevel: 20, multPerLevel: 2),
             [BetType.Street] = new BetStats(points: 25, mult: 3, pointsPerLevel: 20, multPerLevel: 2),
             [BetType.Split] = new BetStats(points: 30, mult: 3, pointsPerLevel: 25, multPerLevel: 2),
-            [BetType.Straight] = new BetStats(points: 50, mult: 5, pointsPerLevel: 30, multPerLevel: 3),
+            [BetType.Straight] = new BetStats(points: 50, mult: 5, pointsPerLevel: 60, multPerLevel: 3),
         };
     }
 
@@ -67,12 +70,15 @@ namespace Pleno.Core.Content
     {
         public int StartingMoney { get; set; } = 4;
 
-        /// <summary>Meta por Ante (linha) e mesa (Pequena, Grande, Chefe).</summary>
+        /// <summary>
+        /// Meta por Ante (linha) e mesa (Pequena, Grande, Chefe). Calibradas no simulador da Fase 3
+        /// (resumo ×1, ×4 e ×9): Guloso ~67% na demo, Aleatório 0%.
+        /// </summary>
         public double[][] Targets { get; set; } =
         {
             new double[] { 100, 150, 200 },
-            new double[] { 300, 450, 600 },
-            new double[] { 800, 1200, 1600 },
+            new double[] { 1200, 1800, 2400 },
+            new double[] { 7200, 10800, 14400 },
         };
 
         /// <summary>Recompensa por mesa vencida: Pequena, Grande, Chefe.</summary>

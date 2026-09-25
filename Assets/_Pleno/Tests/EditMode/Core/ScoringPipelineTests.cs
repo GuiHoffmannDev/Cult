@@ -65,9 +65,9 @@ namespace Pleno.Tests.Core
         public void BetLevelsRaisePointsAndMult()
         {
             var levels = new BetLevels();
-            levels.Raise(BetType.Straight, 2); // nível 3: 50 + 2×30 = 110 Pontos, 5 + 2×3 = 11 Mult
+            levels.Raise(BetType.Straight, 2); // nível 3: 50 + 2×60 = 170 Pontos, 5 + 2×3 = 11 Mult
             SpinResult r = Spin.On(19, new[] { PlacedBet.Straight(19, 1) }, levels: levels);
-            Assert.AreEqual(110 + 19, r.Pontos);
+            Assert.AreEqual(170 + 19, r.Pontos);
             Assert.AreEqual(11, r.Mult);
         }
 

@@ -20,18 +20,18 @@ namespace Pleno.Tests.Sim
         }
 
         [Test]
-        public void Presets_ScaleFromTheDefault_AndNeverTouchIt()
+        public void Presets_VaryFromTheDefault_AndNeverTouchIt()
         {
-            Balance scaled = BalancePresets.Get("metas-1-4-9-pleno-x2").Build();
+            Balance scaled = BalancePresets.Get("metas-x1.1").Build();
+            Balance summary = BalancePresets.Get("apostas-do-resumo").Build();
 
-            CollectionAssert.AreEqual(new double[] { 100, 150, 200 }, scaled.Run.Targets[0]);
-            CollectionAssert.AreEqual(new double[] { 1200, 1800, 2400 }, scaled.Run.Targets[1]);
-            CollectionAssert.AreEqual(new double[] { 7200, 10800, 14400 }, scaled.Run.Targets[2]);
-            Assert.AreEqual(100, scaled.Bets[BetType.Straight].Points);
-            Assert.AreEqual(40, scaled.Bets[BetType.Neighbors].PointsPerLevel);
+            CollectionAssert.AreEqual(Balance.Default.Run.Targets[0], scaled.Run.Targets[0]);
+            Assert.AreEqual(Balance.Default.Run.Targets[2][2] * 1.1, scaled.Run.Targets[2][2], 1e-9);
+            Assert.AreEqual(20, summary.Bets[BetType.Neighbors].Points);
+            Assert.AreEqual(30, summary.Bets[BetType.Straight].PointsPerLevel);
 
-            Assert.AreEqual(1600, Balance.Default.Run.Targets[2][2]);
-            Assert.AreEqual(50, Balance.Default.Bets[BetType.Straight].Points);
+            Assert.AreEqual(14400, Balance.Default.Run.Targets[2][2]);
+            Assert.AreEqual(40, Balance.Default.Bets[BetType.Neighbors].Points);
         }
 
         [Test]
