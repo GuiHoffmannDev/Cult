@@ -29,7 +29,9 @@ namespace Pleno.Tests.Core
         {
             RunEngine run = RunTestUtil.New();
             run.State.BossPlan = new[] { BossIds.DuploZero, BossIds.Nevoa, BossIds.Relojoeiro }.ToList();
-            double[] expected = { 100, 150, 200, 300, 450, 600, 800, 1200, 1600 };
+            // Pleno nível 4 (230 Pontos, 14 Mult): 5 fichas no 19 batem até a meta do último Chefe em um giro.
+            run.State.Levels.Raise(BetType.Straight, 3);
+            double[] expected = { 100, 150, 200, 1200, 1800, 2400, 7200, 10800, 14400 };
 
             for (int m = 0; m < expected.Length; m++)
             {

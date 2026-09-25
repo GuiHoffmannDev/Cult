@@ -13,6 +13,7 @@ namespace Pleno.Sim.Editor
         string _seed = SimConfig.DefaultMasterSeed;
         int _threads = Environment.ProcessorCount;
         bool[] _bots = Bot.All.Select(_ => true).ToArray();
+        int _preset;
         Vector2 _scroll;
 
         [MenuItem("Pleno/Simulador/Janela")]
@@ -38,6 +39,9 @@ namespace Pleno.Sim.Editor
                 for (int i = 0; i < _bots.Length; i++)
                     _bots[i] = EditorGUILayout.ToggleLeft(Bot.IdOf(Bot.All[i]), _bots[i]);
                 EditorGUILayout.LabelField("Roda", "Europeia");
+                string[] presets = BalancePresets.All.Select(p => p.Id).ToArray();
+                _preset = EditorGUILayout.Popup("Balanceamento", _preset, presets);
+                EditorGUILayout.LabelField(" ", BalancePresets.All[_preset].Description, EditorStyles.wordWrappedMiniLabel);
             }
 
             bool validSeed = RunSeed.IsValid(_seed);
@@ -59,13 +63,15 @@ namespace Pleno.Sim.Editor
                 {
                     if (GUILayout.Button("Rodar"))
                     {
-                        SimJob.Start(new SimConfig
+                        var config = new SimConfig
                         {
                             Runs = _runs,
                             MasterSeed = _seed,
                             Threads = _threads,
                             Bots = Bot.All.Where((_, i) => _bots[i]).ToList(),
-                        });
+                        };
+                        BalancePresets.Use(config, BalancePresets.All[_preset]);
+                        SimJob.Start(config);
                     }
                 }
                 if (SimJob.OutputDirectory != null && GUILayout.Button("Abrir pasta dos CSVs"))

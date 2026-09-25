@@ -178,8 +178,8 @@ namespace Pleno.Tests.Core
             RunEngine run = WithCard(TabuaIds.Pleno);
             run.UseConsumable(0);
             Assert.AreEqual(2, run.State.Levels.Get(BetType.Straight));
-            // Pleno nível 2: 80 Pontos, 8 Mult → (80 + 19) × 8
-            Assert.AreEqual(792, RunTestUtil.SpinOn(run, 19, PlacedBet.Straight(19, 1)).Total);
+            // Pleno nível 2: 110 Pontos, 8 Mult → (110 + 19) × 8
+            Assert.AreEqual(1032, RunTestUtil.SpinOn(run, 19, PlacedBet.Straight(19, 1)).Total);
         }
 
         [Test]

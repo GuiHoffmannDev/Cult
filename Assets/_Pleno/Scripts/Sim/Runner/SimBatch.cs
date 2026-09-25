@@ -25,7 +25,7 @@ namespace Pleno.Sim
         public Func<Balance> MakeBalance { get; set; } = () => Balance.Default;
 
         /// <summary>Rótulo do balanceamento usado, para o relatório ("padrão" quando não é experimento).</summary>
-        public string BalanceLabel { get; set; } = "padrão";
+        public string BalanceLabel { get; set; } = BalancePresets.DefaultId;
 
         /// <summary>Runs em paralelo. Cada run é independente e determinística, então o resultado não muda.</summary>
         public int Threads { get; set; } = Environment.ProcessorCount;
